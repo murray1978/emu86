@@ -1,5 +1,6 @@
 #ifndef __REGS_H__
 #define __REGS_H__
+#include "arduino.h"
 
 //A few defines for the registers
 #define REG_AX 0x00
@@ -24,6 +25,17 @@
 #define REG_CS 0x01
 #define REG_SS 0x02
 #define REG_DS 0x04
+
+#define FLAG_CF 1
+#define FLAG_PF 2
+#define FLAG_AF 4
+#define FLAG_ZF 6
+#define FLAG_SF 7
+#define FLAG_TF 8
+#define FLAG_IFL 9
+#define FLAG_DF 10
+#define FLAG_OF 11
+
 
 typedef struct regs{
   //Data registers

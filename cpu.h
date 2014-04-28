@@ -1,5 +1,14 @@
 #ifndef __CPU_H__
 #define __CPU_H__
+#include "arduino.h"
+
+//increment intstruction pointer.
+//needs to take last instruction into account.
+byte last_inst_size;
+
+void clearFlagPSW( byte &psw, byte flag){
+  psw ^= flag;
+}
 
 typedef struct cpu{
   //cpu register's including IP.

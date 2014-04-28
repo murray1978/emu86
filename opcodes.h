@@ -1,5 +1,11 @@
 #ifndef __OPCODES_H__
 #define __OPCODES_H__
+#include "arduino.h"
+#include "cpu.h"
+#include "regs.h"
+
+extern cpu_t cpu86;
+
 void inc_ip(void){
   //reg_ip += (i_mod % 3 + 2*(!i_mod * i_rm == 6));
 };

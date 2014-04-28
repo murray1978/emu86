@@ -17,15 +17,6 @@ typedef struct opcode_table{
   __opcode_handler_t opcode_handler;
 } opcode_table_t;
 
-#define FLAG_CF 1
-#define FLAG_PF 2
-#define FLAG_AF 4
-#define FLAG_ZF 6
-#define FLAG_SF 7
-#define FLAG_TF 8
-#define FLAG_IFL 9
-#define FLAG_DF 10
-#define FLAG_OF 11
 
 void setFlagPSW( byte &psw, byte flag){
   psw |= flag;
@@ -40,13 +31,7 @@ boolean decodePSW( byte psw, byte flag ){
   return (( temp >> flag ) & 1);
 }
 
-void clearFlagPSW( byte &psw, byte flag){
-  psw ^= flag;
-}
 
-//increment intstruction pointer.
-//needs to take last instruction into account.
-byte last_inst_size;
 
 //By the way this bit was fun.........not
 opcode_table_t opcode_table[] = {

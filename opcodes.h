@@ -545,141 +545,181 @@ int rol86(void){
  Rotate right
 */
 int ror86(void){
-   return 4;
+  return 4;
 };
-void rcl86(void){
-      switch( cpu86.i_q[0]){
+
+/*
+ Rotate through carry left
+*/
+int rcl86(void){
+  return 4;
+};
+
+/*
+ Rotate through carry right
+*/
+int rcr86(void){
+  return 4;
+};
+
+/*
+ And
+*/
+int and86(void){
+  int val = 1;
+  switch( cpu86.i_q[0]){
+      default:
+      break;
+  }
+  return val;
+};
+
+/*
+ Test And function to flags no results
+*/
+int test86(void){
+  int val = 1;
+  
+  switch( cpu86.i_q[0]){
       default:
       break;
     }
-  val = 1;
+  return val;
 };
-void rcr86(void){
-      switch( cpu86.i_q[0]){
+
+/*
+ OR
+*/
+int or86(void){
+  int val = 1;
+  switch( cpu86.i_q[0]){
       default:
       break;
-    }
-  val = 1;
+  }
+  return val;
 };
-void and86(void){
-      switch( cpu86.i_q[0]){
+
+/*
+XOR
+*/
+int xor86(void){
+  int val = 1;
+  switch( cpu86.i_q[0]){
       default:
       break;
-    }
-  val = 1;
+  }
+  return val;
 };
-void test86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
-};
-void or86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
-};
-void xor86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
-};
+
+
+
 //String manipulation
-void rep86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+/*
+ Repeat
+*/
+int rep86(void){
+   return 1;
 };
-void movs86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+
+/*
+ move byte word
+*/
+int movs86(void){
+  return 1;
 };
-void cmps86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+  Compare byte word
+*/
+int cmps86(void){
+  return 1;
 };
-void scas86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ scan byte/word
+*/
+int scas86(void){
+  return 1;
 };
-void lods86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ load byte/word into al/ax
+*/
+int lods86(void){
+  return 1;
 };
-void stds86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ Store byte/word from al/ax
+*/
+int stds86(void){
+   return 1;
 };
-void call86(void){
-      switch( cpu86.i_q[0]){
+
+// CONTROL 
+/*
+ Call
+*/
+int call86(void){
+  int val = 1;
+  switch( cpu86.i_q[0]){
       default:
       break;
-    }
-  val = 1;
+  }
+  return val;
 };
-void jmp86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP
+*/
+int jmp86(void){
+  int val = 1;
+  switch( cpu86.i_q[0]){
+    default:
+    break;
+  }
+ return val;
 };
-void ret86(void){
-      switch( cpu86.i_q[0]){
+
+/*
+ return from call
+*/
+int ret86(void){
+  int val = 1;
+   switch( cpu86.i_q[0]){
       default:
       break;
     }
-  val = 1;
+  return val;
 };
-void je86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP equal/zero
+*/
+int je86(void){
+  return 2;
 };
-void jl86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP less, not greater or equal
+*/
+int jl86(void){
+  return 2;
 };
-void jle86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP les or equal, no greater
+*/
+int jle86(void){
+  return 2;
 };
-void jb86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP below
+*/ 
+int jb86(void){
+  return 2;
 };
 void jbe86(void){
       switch( cpu86.i_q[0]){

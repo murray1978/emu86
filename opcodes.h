@@ -59,84 +59,84 @@ int mov86(void){
   */
   //byte, 2nd byte only
   case 176: //al
-    cpu86.ax = 0;
-    cpu86.ax = cpu86.i_q[2];
+    cpu86.regs.ax = 0;
+    cpu86.regs.ax = cpu86.i_q[2];
     val = 2;
     break; 
   case 177: //cl
-    cpu86.cx = 0;
-    cpu86.cx = cpu86.i_q[2];
+    cpu86.regs.cx = 0;
+    cpu86.regs.cx = cpu86.i_q[2];
     val = 2;
     break;
   case 178: //dl
-    cpu86.dx = 0;
-    cpu86.dx = cpu86.i_q[2];
+    cpu86.regs.dx = 0;
+    cpu86.regs.dx = cpu86.i_q[2];
     val = 2;
     break;
   case 179: //bl
-    cpu86.bx = 0;
-    cpu86.bx = cpu86.i_q[2];
+    cpu86.regs.bx = 0;
+    cpu86.regs.bx = cpu86.i_q[2];
     val = 2;
     break;
   case 180: //ah
-    cpu86.ax = 0;
-    cpu86.ax = cpu86.i_q[2]; << 4;
+    cpu86.regs.ax = 0;
+    cpu86.regs.ax = cpu86.i_q[2] << 4;
     val = 2;
     break;
   case 181: //ch
-    cpu86.cx = 0;
-    cpu86.ax = cpu86.i_q[2] << 4;
+    cpu86.regs.cx = 0;
+    cpu86.regs.cx = cpu86.i_q[2] << 4;
     val = 2;
     break;
   case 182: //dh
-    cpu86.dx = 0;
-    cpu86.dx = cpu86.i_q[2] << 4;
+    cpu86.regs.dx = 0;
+    cpu86.regs.dx = cpu86.i_q[2] << 4;
     val = 2;
     break;
   case 183: //bh
-    cpu86.bx = 0;
-    cpu86.bx = cpu86.i_q[2] << 4;
+    cpu86.regs.bx = 0;
+    cpu86.regs.bx = cpu86.i_q[2] << 4;
     val = 2;
     break;
   //word, 2nd and 3rd byte
   case 184: //ax
-    cpu86.ax = cpu86.i_q[2] << 4;
-    cpu86.ax += cpu86.i_q[3];
+    cpu86.regs.ax = cpu86.i_q[2] << 4;
+    cpu86.regs.ax += cpu86.i_q[3];
     val = 3;
     break;
   case 185: //cx
-    cpu86.cx = cpu86.i_q[2] << 4;
-    cpu86.cx += cpu86.i_q[3];
+    cpu86.regs.cx = cpu86.i_q[2] << 4;
+    cpu86.regs.cx += cpu86.i_q[3];
     val = 3;
     break;
   case 186: //dx
-    cpu86.dx = cpu86.i_q[2] << 4;
-    cpu86.dx += cpu86.i_q[3];
+    cpu86.regs.dx = cpu86.i_q[2] << 4;
+    cpu86.regs.dx += cpu86.i_q[3];
     val = 3;
     break;
   case 187: //bx
-    cpu86.bx = cpu86.i_q[2] << 4;
-    cpu86.bx += cpu86.i_q[3];
+    cpu86.regs.bx = cpu86.i_q[2] << 4;
+    cpu86.regs.bx += cpu86.i_q[3];
     val = 3;
     break;
   case 188: //sp
-    cpu86.sp = cpu86.i_q[2] << 4;
-    cpu86.sp += cpu86.i_q[3];
+    cpu86.regs.sp = cpu86.i_q[2] << 4;
+    cpu86.regs.sp += cpu86.i_q[3];
     val = 3;
     break;
   case 189: //bp
-    cpu86.bp = cpu86.i_q[2] << 4;
-    cpu86.bp += cpu86.i_q[3];
+    cpu86.regs.bp = cpu86.i_q[2] << 4;
+    cpu86.regs.bp += cpu86.i_q[3];
     val = 3;
     break;
   case 190: //si
-    cpu86.si = cpu86.i_q[2] << 4;
-    cpu86.si += cpi86.i_q[3];
-    val = 3
+    cpu86.regs.si = cpu86.i_q[2] << 4;
+    cpu86.regs.si += cpu86.i_q[3];
+    val = 3;
     break;
   case 191: //di
-    cpu86.di = cpu86.i_q[2] << 4;
-    cpu86.di += cpu86.i_q[3];
+    cpu86.regs.di = cpu86.i_q[2] << 4;
+    cpu86.regs.di += cpu86.i_q[3];
     val = 3;
     break;
 
@@ -190,6 +190,7 @@ int mov86(void){
 
 //push reg/mem to stack
 int push86(void){
+  int val = 1;
   switch(cpu86.i_q[0]){
      //push reg/mem
      case 255:
@@ -309,7 +310,7 @@ int les86(void){
  Load ah with flags
 */
 int lahf86(void){
-  cpu86.ax = cpu86.psw << 4;
+  cpu86.regs.ax = cpu86.psw << 4;
   return 1;
 };
 
@@ -317,7 +318,7 @@ int lahf86(void){
  Store ah into flags
 */
 int sahf86(void){
-  cpu86.psw = cpu86.ax >> 4;
+  cpu86.psw = cpu86.regs.ax >> 4;
   return 1;
 };
 
@@ -721,201 +722,167 @@ int jle86(void){
 int jb86(void){
   return 2;
 };
-void jbe86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+JMP below or equal.
+*/
+int jbe86(void){
+  return 2;
 };
-void jp86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP parity bit set
+*/
+int jp86(void){
+ return 2;
 };
-void jo86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP overflow bit set
+*/
+int jo86(void){
+return 2;
 };
-void js86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP sgn bit set
+*/
+int js86(void){
+  return 2;
 };
-void jne86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP not equal, zero
+ */
+int jne86(void){
+ return 2;
 };
-void jnl86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+/*
+ JMP not less
+*/
+int jnl86(void){
+  return 2;
 };
-void jnle86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int jnle86(void){
+ return 2;
 };
-void jnb86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int jnb86(void){
+  return 2;
 };
-void jnbe86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int jnbe86(void){
+   return 2;
 };
-void jnp86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int jnp86(void){
+   return 2;
 };
-void jno86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int jno86(void){
+     return 2;
 };
-void jns86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int jns86(void){
+   return 2;
 };
-void loop86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int loop86(void){
+ return 2;
 };
-void loopz86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int loopz86(void){
+   return 2;
 };
-void loopnz86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int loopnz86(void){
+      return 2;
 };
-void jcxz86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+int jcxz86(void){
+ return 2;
 };
 //interupts, oh joy
-void int86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+int int86(void){
+ return 2;
 };
-void into86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int int3(void){
+  return 1;
 };
-void iret86(void){
-      switch( cpu86.i_q[0]){
-      default:
-      break;
-    }
-  val = 1;
+
+int into86(void){
+   return 1;
+};
+
+int iret86(void){
+   return 1;
 };
 
 //processor controll
 //clear carry flag
-void clc86(void){
+int clc86(void){
   clearFlagPSW( cpu86.psw, FLAG_CF );
-  val = 1;
+  return 1;
 };
 
 //complement carry flag, NOT psw(FLAG_CF)
-void cmc86(void){  
-  val = 1;
+int cmc86(void){  
+  return 1;
 };
 
 //Set carry flag, bitwise or
-void stc86(void){
-  val = 1;
+int stc86(void){
+  return 1;
 };
 
 //Clear direction flag
-void cld86(void){
-  val = 1;
+int cld86(void){
+  return 1;
 };
 
 //
-void rstd86(void){
-  val = 1;
+int rstd86(void){
+  return 1;
 };
 
 //Start interupts
-void sti86(void){
-  val = 1;
+int sti86(void){
+  return 1;
 };
 
 //Clear interupts
-void rcli86(void){
-  val = 1;
+int rcli86(void){
+  return 1;
 };
 
 //Halt the processor
-void hlt86(void){
-  val = 1;
+int hlt86(void){
+  return 0;
 };
 
 //Wait for external device.
-void wait86(void){
-  val = 1;
+int wait86(void){
+  if(0){ //extern device wakes us up
+    return 1;
+  }
+  return 0;
 };
 
 //Let external device run
-void esc86(void){
-  val = 1;
+int esc86(void){
+  return 1;
 };
 
-//
-void lock86(void){
-  val = 1;
+//Lock the bus, for us??
+int lock86(void){
+  return 1;
 };
 
-//
-void segment86(void){
-  val = 1;
+//Segment override 
+int segment86(void){
+  return 1;
 };
 
 #endif

@@ -10,7 +10,7 @@
 
 cpu_t cpu86;
 
-typedef void (*__opcode_handler_t)(void);
+typedef int (*__opcode_handler_t)(void);
 
 typedef struct opcode_table{
   // byte opcode;
@@ -32,7 +32,7 @@ boolean decodePSW( byte psw, byte flag ){
 }
 
 
-
+//INC i think is where I am at
 //By the way this bit was fun.........not
 opcode_table_t opcode_table[] = {
   //add reg/mem to eihter

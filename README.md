@@ -43,3 +43,7 @@ typedef struct regs{
 } regs_t;
 
 To save space I will only be using one cpu_t type.
+
+- each opcode is in a lookup table of 256 entrys, multiple locations can point to a "single" opcode 
+- typedef int (*__opcode_handler_t)(void); return type points to how far forward/backward ? to the next opcode
+- I am trying to make each opcode small in size, except the MOV one.

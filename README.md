@@ -2,6 +2,7 @@ emu86
 =====
 
 8086 emulation on an arduino.
+I am currently using this file for ideas, which of course will change in the future.
 
 The arduino I plan on using this code with is a freetronics etherten, which is uno compatible.
 

@@ -7,6 +7,7 @@ The arduino I plan on using this code with is a freetronics etherten, which is u
 
 I am using microcomputer systems: the 8086/8088 family, prentice-hall, 1986 as a guide.
 Page's 129-134 list the opcode,s in a binary format.
+pdf pg 26 onwards.
 
 Main code sections. (These may/will change)
 

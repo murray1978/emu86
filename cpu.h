@@ -18,7 +18,9 @@ typedef struct cpu{
   //Instruction queue, some instructions are 6 bytes in length.
   byte i_q[6];
   unsigned int dataBus;
-  unsigned int addressBus;
+  unsigned long addressBus;
 } cpu_t;
+
+cpu_t cpu86;
 
 #endif

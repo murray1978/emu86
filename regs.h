@@ -49,7 +49,7 @@ typedef struct regs{
   unsigned int bp;
   unsigned int si;
   unsigned int di;
-  unsigned long ip;  //should be 20bits in size.
+  unsigned long ip;  //should be 32bits in size.
 
   //segments
   unsigned int cs;
@@ -57,5 +57,6 @@ typedef struct regs{
   unsigned int ds;
   unsigned int es;
 } regs_t;
+
 
 #endif

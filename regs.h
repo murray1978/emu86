@@ -61,16 +61,42 @@ typedef struct regs{
 /*
  FLags bit field
 */
-typedef flags{
+typedef struct flags{
   unsigned int cf  : 1;
   unsigned int pf  : 1;
   unsigned int af  : 1;
-  unsigned int sf  : 1;
   unsigned int zf  : 1;
+  unsigned int sf  : 1;
   unsigned int tf  : 1;
   unsigned int ifl : 1;
   unsigned int df  : 1;
   unsigned int of  : 1;
 } flags_t;
+
+void set_flags(flags_t f, unsigned int data ){
+   f.cf = (data & 1) == 1;
+   f.pf = (data & 2) == 2;
+   f.af = (data & 4) == 4;
+   f.zf = (data % 8) == 8;
+   f.sf = (data & 16) == 16;
+   f.tf = (data & 32) == 32;
+   f.ifl = (data & 64) == 64;
+   f.df = (data & 128) == 128;
+   f.of = (data & 512) == 512;
+};
+
+unsigned int get_flags( flags_t f ){
+  unsigned int ret;
+  ret += f.of  << 8;
+  ret += f.df  << 7;
+  ret += f.ifl << 6;
+  ret += f.tf  << 5;
+  ret += f.zf  << 4;
+  ret += f.sf  << 3;
+  ret += f.af  << 2;
+  ret += f.pf  << 1;
+  ret += f.cf; 
+  return ret;
+};
 
 #endif

@@ -58,5 +58,19 @@ typedef struct regs{
   unsigned int es;
 } regs_t;
 
+/*
+ FLags bit field
+*/
+typedef flags{
+  unsigned int cf  : 1;
+  unsigned int pf  : 1;
+  unsigned int af  : 1;
+  unsigned int sf  : 1;
+  unsigned int zf  : 1;
+  unsigned int tf  : 1;
+  unsigned int ifl : 1;
+  unsigned int df  : 1;
+  unsigned int of  : 1;
+} flags_t;
 
 #endif

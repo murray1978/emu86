@@ -9,10 +9,10 @@ extern cpu_t cpu86;
 
 /*
 */
-void set_cpu_opcodes( unsigned int displacment ){
-  unsigned int old_ip = cpu86.regs.ip;
+void set_cpu_opcodes( /*unsigned int displacment */){
+  //unsigned int old_ip = cpu86.regs.ip;
   
-  cpu86.regs.ip += displacment;
+  //cpu86.regs.ip += displacment;
   if( cpu86.regs.ip < 0 ){
     //trap seg fault?
     cpu86.regs.ip = 0;
@@ -31,15 +31,15 @@ void set_cpu_opcodes( unsigned int displacment ){
 
 //opcode functions.
 //if the cpu reads an invalid instruction.
-unsigned int noop86(void){
-  return 1;
+void noop86(void){
+cpu86.regs.ip += 1;
 };
 
 /*
   There are seven types of mov each of which can be detected
   using the first byte of the opcode.
 */
-unsigned int mov86(void){
+void mov86(void){
   unsigned int val = 0;
   //i_q holds the six bytes of a potential instruction.
   switch( cpu86.i_q[0] ){
@@ -203,11 +203,11 @@ unsigned int mov86(void){
     val = 1;
     break;    
   }
-  return val;
+  cpu86.regs.ip +=  val;
  };
 
 //push reg/mem to stack
-unsigned int push86(void){
+void push86(void){
   unsigned int val = 1;
   switch(cpu86.i_q[0]){
      //push reg/mem
@@ -231,295 +231,291 @@ unsigned int push86(void){
      default:
        break;
   }
-  return val;
+  cpu86.regs.ip +=  val;
 };
 
 //pop reg/mem to stack, also adc type 3?
-unsigned int pop86(void){
-  unsigned int val = 0;
+void pop86(void){
+  unsigned int val = 1;
   switch( cpu86.i_q[0]){
-      case 2:
-      case 3:
-      case 4:
       break;
       default:
       break;
     }
-  val = 1;
-  return val;
+cpu86.regs.ip +=  val;
 };
 
 //exchange reg/mem with accumulator.
-unsigned int xchg86(void){
+void xchg86(void){
   unsigned int val = 1;
     switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return val;
+cpu86.regs.ip += val;
 };
 
 //in from port, byte or word, fixed or variable port
-unsigned int in86(void){
+void in86(void){
     unsigned int val= 1;
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return val;
+cpu86.regs.ip +=  val;
 };
 
 //out to port, byte or word, fixed or variable length.
-unsigned int out86(void){
+void out86(void){
     unsigned int val = 1;
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return val;
+cpu86.regs.ip += val;
 };
 
 /*
   translate byte to al???????
 */
-unsigned int xlat86(void){
+void xlat86(void){
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return 1; //Known for sure.
+cpu86.regs.ip +=  1; //Known for sure.
 };
 
 
 /*
  Load EA to register.
 */
-unsigned int lea86(void){
+void lea86(void){
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return 4;
+cpu86.regs.ip +=  4;
 };
 
 /*
   Load pointer to ds
 */
-unsigned int lds86(void){
+void lds86(void){
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return 4;
+cpu86.regs.ip += 4;
 };
 
 /*
  Load pointer to es
 */
-unsigned int les86(void){
+void les86(void){
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return 4;
+cpu86.regs.ip += 4;
 };
 
 /*
  Load ah with flags
 */
-unsigned int lahf86(void){
-  cpu86.regs.ax = cpu86.psw << 4;
-  return 1;
+void lahf86(void){
+  cpu86.regs.ax = get_flags(cpu86.flags);
+ cpu86.regs.ip += 1;
 };
 
 /*
  Store ah into flags
 */
-unsigned int sahf86(void){
-  cpu86.psw = cpu86.regs.ax >> 4;
-  return 1;
+void sahf86(void){
+  set_flags( cpu86.flags, (cpu86.regs.ax >> 4)); 
+  cpu86.regs.ip += 1;
 };
 
 /*
   Push flags onto stack
 */
-unsigned int pushf86(void){
-  return 1;
+void pushf86(void){
+  cpu86.regs.ip +=  1;
 };
 
 /*
   pop flags off stack
 */
-unsigned int popf86(void){
-  return 1;
+void popf86(void){
+  cpu86.regs.ip +=  1;
 };
 
 /*
  Add
 */
-unsigned int add86(void){
+void add86(void){
   unsigned int val = 1;
   switch( cpu86.i_q[0]){
      default:
       break;
     }
-  return val;
+  cpu86.regs.ip += val;
 };
 
 
 /*
   Add with carry
 */
-unsigned int adc86(void){
+void adc86(void){
   unsigned int val = 1;
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  val = 1;
+cpu86.regs.ip += 1;
 };
 
 /*
 Inc
 */
-unsigned int inc86(void){
+void inc86(void){
   unsigned int val = 1;
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return val;
+cpu86.regs.ip +=  val;
 };
 
 /*
   ASCII adjust for add
 */
-unsigned int aaa86(void){
-  return 1;
+void aaa86(void){
+cpu86.regs.ip += 1;
 };
 
 /*
  Decimal adjust for add
 */
-unsigned int daa86(void){
-  return 1;
+void daa86(void){
+cpu86.regs.ip +=  1;
 };
 
 /*
  Subtract
 */
-unsigned int sub86(void){
+void sub86(void){
   int val = 1;
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return val;
+cpu86.regs.ip +=  val;
 };
 
 /*
   Decrement
 */ 
-unsigned int dec86(void){
+void dec86(void){
     int val = 1;
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return val;
+cpu86.regs.ip += val;
 };
 
 /*
  Negate
  */
-unsigned int neg86(void){
+void neg86(void){
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return 4;
+cpu86.regs.ip +=  4;
 };
 
 /* 
   Compare
 */
-unsigned int cmp86(void){
+void cmp86(void){
   unsigned int val = 1;
       switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return val;
+cpu86.regs.ip +=  val;
 };
 
 /*
  ASCII adjust for subtract
 */
-unsigned int aas86(void){
-  return 1;
+void aas86(void){
+cpu86.regs.ip += 1;
 };
 
 /*
  Decimal adjust for subtraction.
 */
-unsigned int das86(void){
-  return 1;
+void das86(void){
+cpu86.regs.ip += 1;
 };
 
 /*
  Multily unsigned
 */
-unsigned int mul86(void){
-  return 4;
+void mul86(void){
+ cpu86.regs.ip += 4;
 };
 
 /*
  Integer Multiply 
 */
-unsigned int imul86(void){
-  return 4;
+void imul86(void){
+  cpu86.regs.ip += 4;
 };
 
 /*
  ASCII Adjust for multiply
 */
-unsigned int aam86(void){
-  return 2;
+void aam86(void){
+  cpu86.regs.ip += 2;
 };
 
 /*
  Divide unsigned
  */
-unsigned int div86(void){
-   return 4;
+void div86(void){
+   cpu86.regs.ip += 4;
 };
 
 /* 
  Integer Divide signed
 */
-unsigned int idiv86(void){
-  return 4;
+void idiv86(void){
+  cpu86.regs.ip += 4;
 };
 
 /*
  ASCII Adjust for devide
 */
-unsigned int aad86(void){
- return 2;
+void aad86(void){
+cpu86.regs.ip += 1;
 };
 
 /*
  Convert Byte to word
 */
-unsigned int cbw86(void){
- return 1;
+void cbw86(void){
+cpu86.regs.ip += 1;
 };
 
 /*
  Convert word to double word
 */
-unsigned int cwd86(void){
-  return 1;
+void cwd86(void){
+  cpu86.regs.ip += 1;
 };
 
 /* 
@@ -528,106 +524,106 @@ unsigned int cwd86(void){
  /*
   NOT
 */
-unsigned int not86(void){
-  return 4;
+void not86(void){
+  cpu86.regs.ip += 4;
 };
 
 /*
  Shift logical/arithmetical left
 */
-unsigned int shl86(void){
-  return 4;
+void shl86(void){
+  cpu86.regs.ip += 4;
 }; 
 
 /*
  Shift Logical right
 */
-unsigned int shr86(void){  
-return 4;
+void shr86(void){  
+cpu86.regs.ip += 4;
 };
 
 /*
  Shift arithmetical right
 */
-unsigned int sar86(void){
-  return 4;
+void sar86(void){
+  cpu86.regs.ip += 4;
 };
 
 /*
  Rotate Left
 */
-unsigned int rol86(void){
-   return 4;
+void rol86(void){
+   cpu86.regs.ip += 4;
 };
 
 /*
  Rotate right
 */
-unsigned int ror86(void){
-  return 4;
+void ror86(void){
+  cpu86.regs.ip += 4;
 };
 
 /*
  Rotate through carry left
 */
-unsigned int rcl86(void){
-  return 4;
+void rcl86(void){
+  cpu86.regs.ip += 4;
 };
 
 /*
  Rotate through carry right
 */
-unsigned int rcr86(void){
-  return 4;
+void rcr86(void){
+  cpu86.regs.ip += 4;
 };
 
 /*
  And
 */
-unsigned int and86(void){
+void and86(void){
   unsigned int val = 1;
   switch( cpu86.i_q[0]){
       default:
       break;
   }
-  return val;
+  cpu86.regs.ip += val;
 };
 
 /*
  Test, And function to flags no results
 */
-unsigned int test86(void){
+void test86(void){
   unsigned int val = 1;
   
   switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return val;
+ cpu86.regs.ip += val;
 };
 
 /*
  OR
 */
-unsigned int or86(void){
+void or86(void){
   unsigned int val = 1;
   switch( cpu86.i_q[0]){
       default:
       break;
   }
-  return val;
+  cpu86.regs.ip += val;
 };
 
 /*
 XOR
 */
-unsigned int xor86(void){
+void xor86(void){
   unsigned int val = 1;
   switch( cpu86.i_q[0]){
       default:
       break;
   }
-  return val;
+  cpu86.regs.ip += val;
 };
 
 
@@ -636,85 +632,85 @@ unsigned int xor86(void){
 /*
  Repeat
 */
-unsigned int rep86(void){
-   return 1;
+void rep86(void){
+   cpu86.regs.ip += 1;
 };
 
 
 /*
  move byte word
 */
-unsigned int movs86(void){
-  return 1;
+void movs86(void){
+  cpu86.regs.ip += 1;
 };
 
 /*
   Compare byte word
 */
-unsigned int cmps86(void){
-  return 1;
+void cmps86(void){
+  cpu86.regs.ip += 1;
 };
 
 /*
  scan byte/word
 */
-unsigned int scas86(void){
-  return 1;
+void scas86(void){
+  cpu86.regs.ip += 1;
 };
 
 /*
  load byte/word into al/ax
 */
-unsigned int lods86(void){
-  return 1;
+void lods86(void){
+  cpu86.regs.ip += 1;
 };
 
 /*
  Store byte/word from al/ax
 */
-unsigned int stds86(void){
-   return 1;
+void stds86(void){
+   cpu86.regs.ip += 1;
 };
 
 // CONTROL 
 /*
  Call
 */
-unsigned int call86(void){
-  unsigned int val = 1;
+void call86(void){
+  unsigned int val = 2;
   switch( cpu86.i_q[0]){
       default:
       break;
   }
-  return val;
+  cpu86.regs.ip += val;
 };
 
 /*
  JMP
 */
-unsigned int jmp86(void){
+void jmp86(void){
   //since we are modifing the IP we do not need to change the IP afterwards?
-  unsigned int val = 0;  
+  unsigned int val = 1;  
   switch( cpu86.i_q[0]){
     case 235: //Jump direct with in segment short.
-      cpu86.regs.ip = (unsigned int)cpu86.i_q[1];
+      val = (unsigned int)cpu86.i_q[1];
       break;
     default:
     break;
   }
- return val;
+ cpu86.regs.ip += val;
 };
 
 /*
  return from call
 */
-unsigned int ret86(void){
+void ret86(void){
   unsigned int val = 1;
    switch( cpu86.i_q[0]){
       default:
       break;
     }
-  return val;
+  cpu86.regs.ip += val;
 };
 
 /*
@@ -723,192 +719,193 @@ unsigned int ret86(void){
 /*
  JMP equal/zero
 */
-unsigned int je86(void){
-  return 2;
+void je86(void){
+  cpu86.regs.ip += 2;
 };
 
 /*
  JMP less, not greater or equal
 */
-unsigned int jl86(void){
-  return 2;
+void jl86(void){
+ cpu86.regs.ip += 2;
 };
 
 /*
  JMP les or equal, no greater
 */
-unsigned int jle86(void){
-  return 2;
+void jle86(void){
+  cpu86.regs.ip += 2;
 };
 
 /*
  JMP below
 */ 
-unsigned int jb86(void){
-  return 2;
+void jb86(void){
+  cpu86.regs.ip += 2;
 };
 
 /*
 JMP below or equal.
 */
-unsigned int jbe86(void){
-  return 2;
+void jbe86(void){
+  cpu86.regs.ip += 2;
 };
 
 /*
  JMP parity bit set
 */
-unsigned int jp86(void){
- return 2;
+void jp86(void){
+ cpu86.regs.ip += 2;
 };
 
 /*
  JMP overflow bit set
 */
-unsigned int jo86(void){
-return 2;
+void jo86(void){
+  cpu86.regs.ip += 2;
 };
 
 /*
  JMP sgn bit set
 */
-unsigned int js86(void){
-  return 2;
+void js86(void){
+  cpu86.regs.ip += 2;
 };
 
 /*
  JMP not equal, zero
  */
-unsigned int jne86(void){
- return 2;
+void jne86(void){
+ cpu86.regs.ip += 2;
 };
 
 /*
  JMP not less
 */
-unsigned int jnl86(void){
-  return 2;
+void jnl86(void){
+  cpu86.regs.ip += 2;
 };
 
-unsigned int jnle86(void){
- return 2;
+void jnle86(void){
+ cpu86.regs.ip += 2;
 };
 
-unsigned int jnb86(void){
-  return 2;
+void jnb86(void){
+  cpu86.regs.ip += 2;
 };
 
-unsigned int jnbe86(void){
-   return 2;
+void jnbe86(void){
+   cpu86.regs.ip += 2;
 };
 
-unsigned int jnp86(void){
-   return 2;
+void jnp86(void){
+   cpu86.regs.ip += 2;
 };
 
-unsigned int jno86(void){
-     return 2;
+void jno86(void){
+     cpu86.regs.ip += 2;
 };
 
-unsigned int jns86(void){
-   return 2;
+void jns86(void){
+   cpu86.regs.ip += 2;
 };
 
-unsigned int loop86(void){
- return 2;
+void loop86(void){
+ cpu86.regs.ip += 2;
 };
 
-unsigned int loopz86(void){
-   return 2;
+void loopz86(void){
+   cpu86.regs.ip += 2;
 };
 
-unsigned int loopnz86(void){
-      return 2;
+void loopnz86(void){
+      cpu86.regs.ip += 2;
 };
 
-unsigned int jcxz86(void){
- return 2;
+void jcxz86(void){
+ cpu86.regs.ip += 2;
 };
 //interupts, oh joy
-unsigned int int86(void){
- return 2;
+void int86(void){
+ cpu86.regs.ip += 2;
 };
 
-unsigned int int3(void){
-  return 1;
+void int3(void){
+  cpu86.regs.ip += 1;
 };
 
-unsigned int into86(void){
-   return 1;
+void into86(void){
+   cpu86.regs.ip += 1;
 };
 
-unsigned int iret86(void){
-   return 1;
+void iret86(void){
+   cpu86.regs.ip += 1;
 };
 
 //processor controll
 //clear carry flag
-unsigned int clc86(void){
-  clearFlagPSW( cpu86.psw, FLAG_CF );
-  return 1;
+void clc86(void){
+  //clearFlagPSW( cpu86.psw, FLAG_CF );
+  cpu86.flags.cf = 0;
+  cpu86.regs.ip += 1;
 };
 
 //complement carry flag, NOT psw(FLAG_CF)
-unsigned int cmc86(void){  
-  return 1;
+void cmc86(void){  
+  cpu86.regs.ip += 1;
 };
 
 //Set carry flag, bitwise or
-unsigned int stc86(void){
-  return 1;
+void stc86(void){
+  cpu86.regs.ip += 1;
 };
 
 //Clear direction flag
-unsigned int cld86(void){
-  return 1;
+void cld86(void){
+  cpu86.regs.ip += 1;
 };
 
 //
-unsigned int rstd86(void){
-  return 1;
+void rstd86(void){
+  cpu86.regs.ip += 1;
 };
 
 //Start interupts
-unsigned int sti86(void){
-  return 1;
+void sti86(void){
+  cpu86.regs.ip += 1;
 };
 
 //Clear interupts
-unsigned int rcli86(void){
-  return 1;
+void rcli86(void){
+  cpu86.regs.ip += 1;
 };
 
 //Halt the processor
-unsigned int hlt86(void){
-  return 0;
+void hlt86(void){
+  cpu86.regs.ip += 0;
 };
 
 //Wait for external device.
-unsigned int wait86(void){
+void wait86(void){
   if(0){ //extern device wakes us up
-    return 1;
+    cpu86.regs.ip += 1;
   }
-  return 0;
+  cpu86.regs.ip += 0;
 };
 
 //Let external device run
-unsigned int esc86(void){
-  return 1;
+void esc86(void){
+  cpu86.regs.ip += 1;
 };
 
 //Lock the bus, for us??
-unsigned int lock86(void){
-  return 1;
+void lock86(void){
+  cpu86.regs.ip += 1;
 };
 
 //Segment override 
-unsigned int segment86(void){
-  return 1;
+void segment86(void){
+  cpu86.regs.ip += 1;
 };
 
 #endif

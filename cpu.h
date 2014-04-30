@@ -21,6 +21,10 @@ typedef struct cpu{
   unsigned long addressBus;
 } cpu_t;
 
+//having this variable global is very bad, but.
+//we should only change it once per loop, ie
+//when an opcode is about to return a change in ip is
+// made
 cpu_t cpu86;
 
 #endif

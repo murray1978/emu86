@@ -35,7 +35,7 @@ boolean decodePSW( byte psw, byte flag ){
 */
 void cpu_reset(){
   //clear registers, program status word. ie flags
-  cpu86.psw = 0;
+  //cpu86.flags = 0;
 
   //general purpose
   cpu86.regs.ax = 0;    //Accumulator, AH+AL, and,or,xor,shl,shr etc
@@ -83,7 +83,7 @@ void setup(){
   //Startup the lcd driver.
   lcd.begin(16,2);
   lcd.setCursor(0,0);
-  lcd.print("emu86 V0.02");
+  lcd.print("emu86 V0.03");
   lcd.setCursor(0,1);
   
   //resetCpu to a known state.
@@ -115,15 +115,15 @@ void setup(){
 //which opcode are we using
 byte opcode = 0;
 //displacement from current address, with in current segment.
-int addressOffset = 0;
+//int addressOffset = 0;
 unsigned long mem = 0;
 
 void loop(){
 
   //get 6 bytes of code into cpu86.i_q
-  set_cpu_opcodes(addressOffset);
+  set_cpu_opcodes(/*addressOffset*/);
   opcode = cpu86.i_q[0];
-  //addressOffset = opcode_table[cpu86.i_q[0]].opcode_handler();
+  opcode_table[cpu86.i_q[0]];//.opcode_handler();
   //shift data via data/address/status pins
   lcd.clear();
   lcd.setCursor(0,0);
@@ -134,7 +134,7 @@ void loop(){
   lcd.print( cpu86.regs.ip );
   lcd.setCursor(8,1);
     delay(750);
-  addressOffset = 1;
+  //addressOffset = 1;
 }
 
 

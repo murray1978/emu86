@@ -14,7 +14,7 @@ typedef struct cpu{
   //cpu register's including IP.
   regs_t regs;
   //Program status word. ie flags.
-  byte psw;
+  flags_t flags;
   //Instruction queue, some instructions are 6 bytes in length.
   byte i_q[6];
   unsigned int dataBus;

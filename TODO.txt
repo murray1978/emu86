@@ -14,3 +14,5 @@ memory.h:
   Check on 0x0f opcode, can we use it as a noop.
 bc.h:
   Add more comments about opcodes, condense opcodes.
+README.md
+  ReWrite shift current content into NOTES.txt.

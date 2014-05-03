@@ -1,0 +1,16 @@
+Emu86 TODO list.
+
+emu86.ino:
+  will need to add "drivers" for other chips soon.
+cpu.h:
+  combine with regs?, comment code.
+regs.h:
+  comment on regs and flag's
+opcode.h:
+  continue adding and testing opcode's, start with the mov opcode's
+  continue commenting the opcode section's
+memory.h:
+  Internal and external ram locations.
+  Check on 0x0f opcode, can we use it as a noop.
+bc.h:
+  Add more comments about opcodes, condense opcodes.

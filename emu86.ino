@@ -8,7 +8,7 @@
 #include "cpu.h"
 #include "opcodes.h"
 #include "memory.h"
-#include "opcode_table.h"
+#include "bc.h"
 #include <Wire.h>
 #include <LiquidCrystal.h>
 
@@ -83,7 +83,7 @@ void setup(){
   //Startup the lcd driver.
   lcd.begin(16,2);
   lcd.setCursor(0,0);
-  lcd.print("emu86 V0.03");
+  lcd.print("emu86 V0.05");
   lcd.setCursor(0,1);
   
   //resetCpu to a known state.
@@ -107,34 +107,27 @@ void setup(){
   lcd.setCursor(0,1);
   lcd.print("cpu86 started");
   delay(1200);
-
   
-  //manually setting cpu86.i_q[] to a no-op state
 }
-
-//which opcode are we using
-byte opcode = 0;
-//displacement from current address, with in current segment.
-//int addressOffset = 0;
-unsigned long mem = 0;
 
 void loop(){
 
-  //get 6 bytes of code into cpu86.i_q
-  set_cpu_opcodes(/*addressOffset*/);
-  opcode = cpu86.i_q[0];
-  opcode_table[cpu86.i_q[0]];//.opcode_handler();
-  //shift data via data/address/status pins
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("OC   IP    MEM");
   lcd.setCursor(0,1);
-  lcd.print( opcode );
+  lcd.print( (unsigned int)cpu86.i_q[0] );
+  
+  //get 6 bytes of code into cpu86.i_q
+  set_cpu_opcodes();
+  cpuloop((unsigned int)cpu86.i_q[0]);
+  //shift data via data/address/status pins
+ 
+
   lcd.setCursor(5,1);
   lcd.print( cpu86.regs.ip );
   lcd.setCursor(8,1);
-    delay(750);
-  //addressOffset = 1;
+  delay(750);
 }
 
 

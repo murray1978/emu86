@@ -186,7 +186,14 @@ void mov86(void){
     type 6 reg/mem to segment
   */
   case 142:
-    val = 4;
+    switch(cpu86.i_q[1]){
+      case 1:
+        val = 4;
+        break;
+      default:
+        val = 2;
+        break;
+    }
     break;
 
   /*

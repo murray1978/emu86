@@ -83,7 +83,7 @@ void setup(){
   //Startup the lcd driver.
   lcd.begin(16,2);
   lcd.setCursor(0,0);
-  lcd.print("emu86 V0.05");
+  lcd.print("emu86 V0.07");
   lcd.setCursor(0,1);
   
   //resetCpu to a known state.
@@ -114,19 +114,23 @@ void loop(){
 
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print("OC   IP    MEM");
+  lcd.print("OC  IP   MEM");
   lcd.setCursor(0,1);
   lcd.print( (unsigned int)cpu86.i_q[0] );
+  
+  lcd.setCursor(4,1);
+  lcd.print( cpu86.regs.ip );
+  lcd.setCursor(9,1);
+  unsigned long mem = ( unsigned long )cpu86.regs.cs;
+  mem = (mem << 4);
+  mem += (unsigned long)cpu86.regs.ip;
+  lcd.print( (unsigned long)mem );
   
   //get 6 bytes of code into cpu86.i_q
   set_cpu_opcodes();
   cpuloop((unsigned int)cpu86.i_q[0]);
   //shift data via data/address/status pins
  
-
-  lcd.setCursor(5,1);
-  lcd.print( cpu86.regs.ip );
-  lcd.setCursor(8,1);
   delay(750);
 }
 

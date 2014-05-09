@@ -4,26 +4,26 @@
 #include "cpu.h"
 
 /*
- Jump Rom Memory.
+ Jump Rom Memory. dec 1048560
 */
 #define JMP_START 0xffff0
 #define JMP_END   0xfffff
 
 /*
- Boot Rom
+ Boot Rom  0xfff8C dec 1048460     
 */
 #define ROM_SIZE  0x64
-#define ROM_START JMP_START - ROM_SIZE
+#define ROM_START JMP_START - ROM_SIZE 
 #define ROM_END   JMP_START
 
 /*
- Interupt vector table RAM
+ Interupt vector table RAM  dec 0.
 */
 #define IVT_START 0
 #define IVT_END   0x3ff
 
 /*
- System Ram, could be external EEPROM, FLash etc.
+ System Ram, could be external EEPROM, FLash etc., dec 1024.
 */
 #define RAM_START 0x400
 #define RAM_SIZE  0xff
@@ -59,7 +59,8 @@ byte jmp_rom[] = {
      mov ax, ROM_START      184, 256, 256, ( 0xb8, 0xff, 0xff)
      immediate to register, word, 
      mov cs, ax             142, 200, ( 0x8E, 0xC8 )
-     reg to segment        
+     reg to segment    
+     Note this jmp is never done.     
      jmp 0                 233, 249 (0xE9, 0xF9)             
     reset ip.
   */
@@ -125,7 +126,7 @@ byte get_phys_byte( unsigned int ip){
   if( mem >= ROM_START){
   	if( mem < ROM_END ){
   	 	if( ( mem - ROM_START ) < ROM_SIZE ){ 
-  			return (byte)mem_rom256[mem - ROMSTART];
+  			return (byte)mem_rom256[mem - ROM_START];
   	 	}
   	}
   }

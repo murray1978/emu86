@@ -78,83 +78,83 @@ void mov86(void){
   //byte, 2nd byte only
   case 176: //al
     cpu86.regs.ax = 0;
-    cpu86.regs.ax = cpu86.i_q[2];
+    cpu86.regs.ax = (unsigned int)cpu86.i_q[1];
     val = 2;
     break; 
   case 177: //cl
     cpu86.regs.cx = 0;
-    cpu86.regs.cx = cpu86.i_q[2];
+    cpu86.regs.cx = (unsigned int)cpu86.i_q[1];
     val = 2;
     break;
   case 178: //dl
     cpu86.regs.dx = 0;
-    cpu86.regs.dx = cpu86.i_q[2];
+    cpu86.regs.dx = (unsigned int)cpu86.i_q[1];
     val = 2;
     break;
   case 179: //bl
     cpu86.regs.bx = 0;
-    cpu86.regs.bx = cpu86.i_q[2];
+    cpu86.regs.bx = (unsigned int)cpu86.i_q[1];
     val = 2;
     break;
   case 180: //ah
     cpu86.regs.ax = 0;
-    cpu86.regs.ax = cpu86.i_q[2] << 4;
+    cpu86.regs.ax = (unsigned int)(cpu86.i_q[1] << 4);
     val = 2;
     break;
   case 181: //ch
     cpu86.regs.cx = 0;
-    cpu86.regs.cx = cpu86.i_q[2] << 4;
+    cpu86.regs.cx = (unsigned int)(cpu86.i_q[1] << 4);
     val = 2;
     break;
   case 182: //dh
     cpu86.regs.dx = 0;
-    cpu86.regs.dx = cpu86.i_q[2] << 4;
+    cpu86.regs.dx = (unsigned int)(cpu86.i_q[1] << 4);
     val = 2;
     break;
   case 183: //bh
     cpu86.regs.bx = 0;
-    cpu86.regs.bx = cpu86.i_q[2] << 4;
+    cpu86.regs.bx = (unsigned int)(cpu86.i_q[1] << 4);
     val = 2;
     break;
   //word, 2nd and 3rd byte
   case 184: //ax
-    cpu86.regs.ax = cpu86.i_q[2] << 4;
-    cpu86.regs.ax += cpu86.i_q[3];
+    cpu86.regs.ax = (unsigned int)(cpu86.i_q[1] << 4);
+    cpu86.regs.ax += (unsigned int)cpu86.i_q[2];
     val = 3;
     break;
   case 185: //cx
-    cpu86.regs.cx = cpu86.i_q[2] << 4;
-    cpu86.regs.cx += cpu86.i_q[3];
+    cpu86.regs.cx = (unsigned int)(cpu86.i_q[1] << 4);
+    cpu86.regs.cx += (unsigned int)cpu86.i_q[2];
     val = 3;
     break;
   case 186: //dx
-    cpu86.regs.dx = cpu86.i_q[2] << 4;
-    cpu86.regs.dx += cpu86.i_q[3];
+    cpu86.regs.dx = (unsigned int)(cpu86.i_q[1] << 4);
+    cpu86.regs.dx += (unsigned int)cpu86.i_q[2];
     val = 3;
     break;
   case 187: //bx
-    cpu86.regs.bx = cpu86.i_q[2] << 4;
-    cpu86.regs.bx += cpu86.i_q[3];
+    cpu86.regs.bx = (unsigned int)(cpu86.i_q[1] << 4);
+    cpu86.regs.bx += (unsigned int)cpu86.i_q[2];
     val = 3;
     break;
   case 188: //sp
-    cpu86.regs.sp = cpu86.i_q[2] << 4;
-    cpu86.regs.sp += cpu86.i_q[3];
+    cpu86.regs.sp = (unsigned int)(cpu86.i_q[1] << 4);
+    cpu86.regs.sp += (unsigned int)cpu86.i_q[2];
     val = 3;
     break;
   case 189: //bp
-    cpu86.regs.bp = cpu86.i_q[2] << 4;
-    cpu86.regs.bp += cpu86.i_q[3];
+    cpu86.regs.bp = (unsigned int)(cpu86.i_q[1] << 4);
+    cpu86.regs.bp += (unsigned int)cpu86.i_q[2];
     val = 3;
     break;
   case 190: //si
-    cpu86.regs.si = cpu86.i_q[2] << 4;
-    cpu86.regs.si += cpu86.i_q[3];
+    cpu86.regs.si = (unsigned int)(cpu86.i_q[1] << 4);
+    cpu86.regs.si += (unsigned int)cpu86.i_q[2];
     val = 3;
     break;
   case 191: //di
-    cpu86.regs.di = cpu86.i_q[2] << 4;
-    cpu86.regs.di += cpu86.i_q[3];
+    cpu86.regs.di = (unsigned int)(cpu86.i_q[1] << 4);
+    cpu86.regs.di += (unsigned int)cpu86.i_q[2];
     val = 3;
     break;
 
@@ -187,9 +187,56 @@ void mov86(void){
   */
   case 142:
     switch(cpu86.i_q[1]){
-      case 1:
-        val = 4;
+      //mod 0 sr r/m
+      case 0: //disp = 0, val = 2, ES?, EA= bx + si + DISP
+        val = 2;
         break;
+      case 192: //1100 0000, val = 2, ES = AX
+        cpu86.regs.es = cpu86.regs.ax;
+        val = 2;
+        break;
+      case 193: //1100 0001, val = 2, ES = CX
+        cpu86.regs.es = cpu86.regs.cx;
+        val = 2;
+        break;
+      case 194: //1100 0010 val = 2, ES = DX
+        cpu86.regs.es = cpu86.regs.dx;
+        val = 2;
+        break;
+      case 195: //1100 0011 val = 2, ES = BX
+        cpu86.regs.es = cpu86.regs.bx;
+        val = 2;
+        break;
+      case 196: //1100 0100, val= 2, ES = SP
+         cpu86.regs.es = cpu86.regs.sp;
+         val = 2;
+         break;
+      case 197:  //1100 0101,  val = 2, ES = BP
+          cpu86.regs.es = cpu86.regs.bp;
+          val = 2;
+          break;
+      case 198: //1100 0110, val = 2, ES = SI
+          cpu86.regs.es = cpu86.regs.si;    
+          val = 2;
+          break;
+      case 199: //1100 0111, val = 2, ES = DI
+          cpu86.regs.es = cpu86.regs.di;
+          val = 2;
+          break;
+      case 200:  //1100 1000, val = 2, CS = AX
+          cpu86.regs.cs = cpu86.regs.ax;
+          val  = 2;
+          break;
+      case 201: //1100 1001, val = 2, CS = CX
+          cpu86.regs.cs = cpu86.regs.cx;
+          val = 2;
+          break;
+      case 216:
+            //disp = 0, val = 2, r/m = reg, 11 = DS, 000 = AX
+        cpu86.regs.ds = cpu86.regs.ax;
+        val = 2;
+        break;
+        //case
       default:
         val = 2;
         break;

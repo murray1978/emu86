@@ -1,6 +1,8 @@
 emu86
 =====
 
+A mega would be more suitable for this code, memory size and pin's avaliable.
+
 8086 emulation on an arduino.
 I am currently using this file for ideas, which of course will change in the future.
 

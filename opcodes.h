@@ -1,3 +1,7 @@
+/*
+ 8086 Opcodes,
+ TODO - have each opcode in it's own file.
+*/
 #ifndef __OPCODES_H__
 #define __OPCODES_H__
 #include "arduino.h"

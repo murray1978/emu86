@@ -37,7 +37,7 @@ void cpu_reset(){
   //clear registers, program status word. ie flags
   //cpu86.flags = 0;
 
-  //general purpose
+  //general purpose registers, in reality these would be random values
   cpu86.regs.ax = 0;    //Accumulator, AH+AL, and,or,xor,shl,shr etc
   cpu86.regs.bx = 0;    //Base BH+BL,  translate
   cpu86.regs.cx = 0;    //Count CH+CL, string and loop operations
@@ -60,7 +60,7 @@ void cpu_reset(){
   cpu86.regs.ip = 0;    //offset from cs, so physical address is ((cs << 4) + ip)?
   
   //data in i_q
-  cpu86.i_q[0] = 100;    //should equate to a noop 
+  cpu86.i_q[0] = 100;    //should equate to a noop, temp value?
   cpu86.i_q[1] = 0;
   cpu86.i_q[2] = 0;
   cpu86.i_q[3] = 0;
@@ -75,7 +75,7 @@ void cpu_reset(){
 void init_ram( byte *ram, int len ){
   int i = 0;
   for( i = 0; i < len; i++ ){
-    ram[i] = 22;
+    ram[i] = 22; // 22 is an op code for?
   }
 }
 
@@ -91,13 +91,13 @@ void setup(){
   lcd.print("cpu86 reset");
   delay(600);
   
-  //reset code ram to a known state.
+  //reset code ram to a known state. 256 bytes starting at address 0
   init_ram( mem_ram256, 255);
   lcd.setCursor(0,1);
   lcd.print("ram 256b init");
   delay(600);
   
-  //reset IVT ram to a known state
+  //reset IVT ram to a known state, not needed unless above is rom
   init_ram( mem_low1024, 1023);
   lcd.setCursor(0,1);
   lcd.print("IVT ram 1024b set");

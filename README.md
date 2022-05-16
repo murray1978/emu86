@@ -6,7 +6,6 @@ A mega would be more suitable for this code, memory size and pin's avaliable.
 8086 emulation on an arduino.
 I am currently using this file for ideas, which of course will change in the future.
 
-The arduino I plan on using this code with is a freetronics etherten, which is uno compatible.
 
 I am using microcomputer systems: the 8086/8088 family, prentice-hall, 1986 as a guide.
 Page's 129-134 list the opcode,s in a binary format.

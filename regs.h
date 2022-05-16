@@ -59,7 +59,7 @@ typedef struct regs{
 } regs_t;
 
 /*
- FLags bit field
+ FLags bit field, align to a 16bit word.
 */
 typedef struct flags{
   unsigned int cf  : 1;

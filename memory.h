@@ -76,7 +76,7 @@ byte jmp_rom[] = {
   16 byte 
   For starter's.
   	Rom starts at processor initalisation point, for 1/4 segment?
-  	Ram starts at 0x0000 for IVT (and GDT?)
+  	Ram starts at 0x0000 for IVT (and GDT?( GDT for 386 and above))
   Memory map...
      0x0 -> 0x3ff
      	IVT
@@ -144,9 +144,8 @@ byte get_phys_byte( unsigned int ip){
   
   /*
     Return a noop86 instruction.
-    TODO confirm we can use 0x0f as a noop.
   */
-  return 0x0f;
+  return 0x64;
 }
 
 
